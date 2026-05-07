@@ -21,6 +21,7 @@ export default function AgendaAdminPage({
   fetchWeekAppointments,
   onDeleteAppointment,
 }) {
+  const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState("");
 
