@@ -189,7 +189,9 @@ function App() {
       setOkMessage("Estado de cita actualizado.");
       await fetchRoleAppointments();
       if (weekStart && weekEnd) {
-        await fetchWeekAppointments(weekStart, weekEnd);
+        if (auth.user.rol === "barbero") {
+          await fetchWeekAppointments(weekStart, weekEnd);
+        }
         if (auth.user.rol === "admin") {
           await fetchAdminWeekAppointments(weekStart, weekEnd);
         }
