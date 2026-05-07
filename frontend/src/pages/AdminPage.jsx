@@ -72,8 +72,8 @@ export default function AdminPage({
       </article>
 
       <article className="card">
-        <h2>Crear barbero</h2>
-        <p className="muted">Agrega nuevos barberos al sistema.</p>
+        <h2>Nuevo/a Empleado/a</h2>
+        <p className="muted">Agrega nuevos empleados al sistema.</p>
         <form onSubmit={onCreateBarber} className="form">
           <input
             placeholder="Nombre"
@@ -102,7 +102,8 @@ export default function AdminPage({
       </article>
 
       <article className="card">
-        <h2>Barberos</h2>
+        <h2>Empleados</h2>
+        <p className="muted">Elimina empleados del sistema.</p>
         {barbers.length === 0 ? <p className="muted">No hay barberos.</p> : null}
         <ul className="list-reset list-stack">
           {barbers.map((item) => (
@@ -123,6 +124,7 @@ export default function AdminPage({
 
       <article className="card">
         <h2>Clientes</h2>
+        <p className="muted">Elimina clientes del sistema.</p>
         {clients.length === 0 ? <p className="muted">No hay clientes.</p> : null}
         <ul className="list-reset list-stack">
           {clients.map((item) => (
