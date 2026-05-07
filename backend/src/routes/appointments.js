@@ -185,7 +185,7 @@ router.patch("/:id/cancel", requireAuth, async (req, res, next) => {
 router.patch("/:id/status", requireAuth, requireRole("barbero", "admin"), async (req, res, next) => {
   try {
     const id = Number(req.params.id);
-    const body = z.object({ estado: z.nativeEnum(AppointmentStatus) }).parse(req.body);
+    const body = z.object({ estado: z.enum(["pendiente", "confirmada", "completada", "cancelada"]) }).parse(req.body);
 
     const cita = await prisma.cita.findUnique({ where: { id }, include: { barbero: true } });
     if (!cita) throw createAppError(404, ErrorCodes.RESOURCE_NOT_FOUND, "Cita no encontrada.");
