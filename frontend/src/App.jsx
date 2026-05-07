@@ -190,7 +190,9 @@ function App() {
       await fetchRoleAppointments();
       if (weekStart && weekEnd) {
         await fetchWeekAppointments(weekStart, weekEnd);
-        await fetchAdminWeekAppointments(weekStart, weekEnd);
+        if (auth.user.rol === "admin") {
+          await fetchAdminWeekAppointments(weekStart, weekEnd);
+        }
       }
     } catch (err) {
       setError(err?.response?.data?.message ?? "No se pudo actualizar estado.");
