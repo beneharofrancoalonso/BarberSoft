@@ -189,8 +189,12 @@ function App() {
       setOkMessage("Estado de cita actualizado.");
       await fetchRoleAppointments();
       if (weekStart && weekEnd) {
-        await fetchWeekAppointments(weekStart, weekEnd);
-        await fetchAdminWeekAppointments(weekStart, weekEnd);
+        if (auth.user.rol === "barbero") {
+          await fetchWeekAppointments(weekStart, weekEnd);
+        }
+        if (auth.user.rol === "admin") {
+          await fetchAdminWeekAppointments(weekStart, weekEnd);
+        }
       }
     } catch (err) {
       setError(err?.response?.data?.message ?? "No se pudo actualizar estado.");
@@ -253,9 +257,25 @@ function App() {
       await api.delete(`/appointments/${id}`);
       setOkMessage("Cita eliminada.");
       await fetchRoleAppointments();
+      if (auth.user.rol === "admin") {
+        const now = new Date();
+        const { start, end } = getWeekDates(now);
+        await fetchAdminWeekAppointments(start.toISOString(), end.toISOString());
+      }
     } catch (err) {
       setError(err?.response?.data?.message ?? "No se pudo eliminar cita.");
     }
+  }
+
+  function getWeekDates(date) {
+    const d = new Date(date);
+    const day = d.getDay();
+    const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+    const start = new Date(d);
+    start.setDate(diff);
+    const end = new Date(start);
+    end.setDate(end.getDate() + 6);
+    return { start, end };
   }
 
   async function onCreateBarber(e) {
@@ -389,6 +409,7 @@ function App() {
                 weekAppointments={adminWeekAppointments} 
                 onChangeAppointmentStatus={onChangeAppointmentStatusAndReload}
                 fetchWeekAppointments={fetchAdminWeekAppointments}
+                onDeleteAppointment={onDeleteAppointment}
               />
             ) : (
               <Navigate to="/auth" replace />

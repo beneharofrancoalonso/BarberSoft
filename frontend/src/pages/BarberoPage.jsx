@@ -107,12 +107,15 @@ export default function BarberoPage({
             
             <div className="form">
               <label>Cambiar estado:</label>
-              <select value={selectedStatus} onChange={async (e) => { const newStatus = e.target.value; setSelectedStatus(newStatus); await onChangeAppointmentStatus(selectedAppointment.id, newStatus, weekStart.toISOString(), weekEnd.toISOString()); setSelectedAppointment(null); }}>
+              <select value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)}>
                 <option value="pendiente">Pendiente</option>
                 <option value="confirmada">Confirmada</option>
                 <option value="completada">Completada</option>
                 <option value="cancelada">Cancelada</option>
               </select>
+              <button className="btn btn-secondary" style={{ marginTop: "0.5rem" }} onClick={async () => { await onChangeAppointmentStatus(selectedAppointment.id, selectedStatus, weekStart.toISOString(), weekEnd.toISOString()); setSelectedAppointment(null); }}>
+                Guardar estado
+              </button>
             </div>
             
             <button className="btn" style={{ marginTop: "1rem", width: "100%" }} onClick={() => setSelectedAppointment(null)}>Cerrar</button>
