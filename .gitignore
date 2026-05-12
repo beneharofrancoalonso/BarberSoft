@@ -5,4 +5,4 @@ node_modules/
 .DS_Store
 dist/
 .vite/
-BarberSoft - Brave 2026-05-07 14-08-33.mp4
+*.mp4
